@@ -4,8 +4,8 @@
  */
 
 const cnw = require('./modules/Ticket');
-const cnwbot = require('./modules/PostMessage');
-const ConnectWiseRest = require('connectwise-rest');
+const cnwbot = require('./modules/slack/PostMessage');
+const ConnectWiseRest = require('./modules/connectwise-rest');
 
 const options = {
     companyId: 'claratti',
@@ -19,7 +19,7 @@ const ticketAPI = new ConnectWiseRest(options).ServiceDeskAPI.Tickets;
 
 async function getData() {
     const tickets = [];
-    for (var i = 0; i <= 2000; i++) {
+    for (var i = 100; i <= 200; i++) {
         if (ticketAPI.getTicketById)
         console.log(i);
         const json = await ticketAPI.getTicketById(i).then((result) => {
@@ -27,10 +27,9 @@ async function getData() {
             tickets.push(result);
         }).catch((err) => console.log('err'));
     }
-
-    //return console.log(ticket[0]);
+    
     tickets.forEach((ticket) => {
-        console.log(ticket.status);
+        console.log(ticket.summary + ":  " + ticket.id);
     })
 }
 

@@ -3,8 +3,8 @@
  * @author Micheal Thompson <micheal.thompson@claratti.com>
  */
 
-const ConnectWiseRest = require('connectwise-rest');
-const cnwbot = require('./PostMessage');
+const ConnectWiseRest = require('./connectwise-rest');
+const cnwbot = require('./slack/PostMessage');
 
 const options = {
     companyId: 'claratti',

@@ -1,0 +1,99 @@
+{
+  "_from": "connectwise-rest@^0.23.1",
+  "_id": "connectwise-rest@0.23.1",
+  "_inBundle": false,
+  "_integrity": "sha512-x3veJ3lxkmaK1+j1kXQbToCwMg+4XaSoSp8ZnwUcKyyWLCfe2tXkvWCcS2GkZk3ZIdIyrQ8dnTo8vTbJN3SRUA==",
+  "_location": "/connectwise-rest",
+  "_phantomChildren": {
+    "aws-sign2": "0.7.0",
+    "aws4": "1.8.0",
+    "caseless": "0.12.0",
+    "combined-stream": "1.0.8",
+    "extend": "3.0.2",
+    "forever-agent": "0.6.1",
+    "form-data": "2.3.3",
+    "har-validator": "5.1.3",
+    "http-signature": "1.2.0",
+    "is-typedarray": "1.0.0",
+    "isstream": "0.1.2",
+    "json-stringify-safe": "5.0.1",
+    "mime-types": "2.1.24",
+    "oauth-sign": "0.9.0",
+    "performance-now": "2.1.0",
+    "qs": "6.5.2",
+    "safe-buffer": "5.1.2",
+    "tough-cookie": "2.4.3",
+    "tunnel-agent": "0.6.0",
+    "uuid": "3.3.2"
+  },
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "connectwise-rest@^0.23.1",
+    "name": "connectwise-rest",
+    "escapedName": "connectwise-rest",
+    "rawSpec": "^0.23.1",
+    "saveSpec": null,
+    "fetchSpec": "^0.23.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/connectwise-rest/-/connectwise-rest-0.23.1.tgz",
+  "_shasum": "95c7d90c3f9c6fa49f5598dd53870286036b9d3a",
+  "_spec": "connectwise-rest@^0.23.1",
+  "_where": "C:\\Users\\Micheal\\Slack",
+  "author": {
+    "name": "Kevin Grube",
+    "email": "grube.kevin@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/covenanttechnologysolutions/connectwise-rest/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "promise-retry": "^1.1.1",
+    "request": "^2.88.0"
+  },
+  "deprecated": false,
+  "description": "A nodejs module for interacting with the ConnectWise REST API.",
+  "devDependencies": {
+    "coveralls": "^3.0.3",
+    "dotenv": "^6.2.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "jsdoc": "~3.5.5",
+    "jsdoc-to-markdown": "^4.0.1",
+    "lodash": "^4.17.11",
+    "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^13.3.0",
+    "should": "^13.2.3"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "homepage": "https://github.com/covenanttechnologysolutions/connectwise-rest",
+  "keywords": [
+    "connectwise",
+    "rest",
+    "api",
+    "nodejs"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "connectwise-rest",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/covenanttechnologysolutions/connectwise-rest.git"
+  },
+  "scripts": {
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "eslint": "eslint --ext .js src/",
+    "jsdoc": "jsdoc src -r -c ./docs/jsdoc.json -d docs",
+    "jsdocmd": "jsdoc2md src/**/*.js > doc.md",
+    "test": "nyc mocha"
+  },
+  "version": "0.23.1"
+}
