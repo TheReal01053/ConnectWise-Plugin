@@ -17,22 +17,26 @@ const options = {
 
 const ticketAPI = new ConnectWiseRest(options).ServiceDeskAPI.Tickets;
 
-async function getData() {
-    const tickets = [];
-    for (var i = 100; i <= 200; i++) {
-        if (ticketAPI.getTicketById)
-        console.log(i);
-        const json = await ticketAPI.getTicketById(i).then((result) => {
-            //if (result.stat)
-            tickets.push(result);
-        }).catch((err) => console.log('err'));
-    }
+var tickets = [];
+
+async function queryAPI() {
+    const query = await ticketAPI.getTicketsBySize(1000).then((result) => {
+        tickets.push(result);
+    })
+
+    return query;
+}
+
+queryAPI();
+
+async function readData() {
+    await queryAPI();
     
     tickets.forEach((ticket) => {
-        console.log(ticket.summary + ":  " + ticket.id);
+        for (var i = 0; i <= 564; i++) {
+            console.log(ticket[i].id)
+        }
     })
 }
 
-getData();
-
-//cnw.getTicketById(1097);
+readData();

@@ -117,8 +117,8 @@ inherits(Tickets, ConnectWise);
  * @param {Params} params
  * @returns {Promise<Ticket[]>}
  */
-Tickets.prototype.getTickets = function (params) {
-  return this.api('/service/tickets', 'GET', params);
+Tickets.prototype.getTicketsBySize = function (id) {
+  return this.api(`/service/tickets?pageSize=${id}`, 'GET');
 };
 
 /**

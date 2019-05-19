@@ -46,5 +46,15 @@ async function getTicketById(ticketId) {
     })
 }
 
+/**
+ * Check if ticket is closed true | false
+ * @param {*} status 
+ */
+
+function isClosed(status) {
+    return status.includes('>Closed');
+}
+
+module.exports.isClosed = isClosed;
 module.exports.getTicketNotesById = getTicketNotesById;
 module.exports.getTicketById = getTicketById;
