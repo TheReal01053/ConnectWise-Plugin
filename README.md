@@ -1,6 +1,9 @@
+
+<p align="center">
+  <h1>ConnectWise-Plugin</h1>
+</p>
 <p align="center" title="Author">
-    <h3>ConnectWise-Plugin</h3>
-    Author: Micheal Thompson
+  Author: Micheal Thompson
 </p>
 
 #### Exclusive features
