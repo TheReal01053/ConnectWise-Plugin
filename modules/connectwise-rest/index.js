@@ -7,4 +7,4 @@
  *
  * @type {ConnectWiseRest}
  */
-module.exports = require('./src/ConnectWiseRest.js.js');
+module.exports = require('./src/ConnectWiseRest.js');

@@ -6,7 +6,7 @@
  * @private
  */
 const inherits = require('util').inherits;
-const ConnectWise = require('../ConnectWise.js');
+const ConnectWise = require('../ConnectWise');
 
 /**
  * @typedef {object} CompanyTeam
