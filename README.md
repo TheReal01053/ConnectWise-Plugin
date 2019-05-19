@@ -1,5 +1,13 @@
-# ConnectWise-Plugin
-This plugin is for integrating ConnectWise with other applications.
+<p align="center">
+  <h1>ConnectWise-Plugin</h1>
+</p>
+<p align="center" title="Build Status">
+  <p>Author: Micheal Thompson</p>
+</p>
 
-# Features
-- Tickets responses sent to Slack message (Supports multiple channel depending on department of Ticket)
+#### Exclusive features
+ - ConnectWise ticket responses pushed to slack channel (Networks, Workspaces) depends on department ticket is in.
+
+#### Dependencies 
+ * **Request** – 2.7.10 and above
+ * **Request-Promise** – 3.5.0 and above
