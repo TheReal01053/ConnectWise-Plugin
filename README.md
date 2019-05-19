@@ -6,7 +6,7 @@
   Author: Micheal Thompson
 </p>
 
-#### Exclusive features
+#### Features
  - ConnectWise ticket responses pushed to slack channel (Networks, Workspaces) depends on department ticket is in.
 
 #### Dependencies 
