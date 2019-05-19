@@ -2,7 +2,7 @@
   <h1>ConnectWise-Plugin</h1>
 </p>
 <p align="center" title="Build Status">
-  <p>Author: Micheal Thompson</p>
+  Author: Micheal Thompson
 </p>
 
 #### Exclusive features
