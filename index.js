@@ -5,30 +5,41 @@
 
 const cnw = require('./modules/Ticket');
 const cnwbot = require('./modules/slack/PostMessage');
-const ConnectWiseRest = require('./modules/connectwise-rest');
 
-const options = {
-    companyId: 'claratti',
-    companyUrl: 'api-aus.myconnectwise.net',
-    entryPoint: 'v2019_3',
-    publicKey: 'pag8CM6jgJ9L0UEF',
-    privateKey: '8zZknlzzosoC7Z71'
-};
+cnw.getTicketNotesById(1097);
 
-const ticketAPI = new ConnectWiseRest(options).ServiceDeskAPI.Tickets;
 
-var tickets = [];
 
-function queryAPI() {
-    return ticketAPI.getTicketsBySize(1000).catch((err) => console.log(err));
+var resp = [];
+
+//setInterval(async () => {
+async function read() {
+    try {
+        const tickets = await cnw.getTickets().catch((err) => console.log(err));
+
+            tickets.forEach(async (ticket) => {
+                if (!cnw.isClosed(ticket.status.name)) {
+                    const query = await cnw.getAllResponses(ticket.id).catch((err) => console.log(err));
+                    const ticketId = query[0].ticketId;
+                    const responses = query[0].text;
+                    
+                    resp.push({
+                        id: ticketId,
+                        response: responses
+                    })
+                }
+            })
+        } catch (e) {
+    }
 }
 
-async function readData() {
-    const tickets = await queryAPI();
+read();
 
-    tickets.forEach((ticket) => {
-        console.log(ticket.summary);
+async function hasUpdated() {
+    await read();
+    resp.forEach((result) => {
+        if (result[index].text != responses) {
+            console.log('send to slack!');
+        }
     })
 }
-
-readData();

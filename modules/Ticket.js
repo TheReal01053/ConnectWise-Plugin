@@ -18,9 +18,7 @@ const tickets = new ConnectWiseRest(options).ServiceDeskAPI.Tickets;
 
 async function getTicketNotesById(ticketId) {
     
-    const type = await tickets.getTicketById(ticketId).then((result) => {
-                        return result;
-    }).catch((err) => {
+    const type = await tickets.getTicketById(ticketId).catch((err) => {
         cnwbot.onError(`Ouch! An Error has occurred please notify developer! \n ${err}`);
     })
 
@@ -46,15 +44,20 @@ async function getTicketById(ticketId) {
     })
 }
 
-/**
- * Check if ticket is closed true | false
- * @param {*} status 
- */
+function getTickets() {
+    return tickets.getTicketsBySize(1000).catch((err) => console.log(err));
+}
+
+async function getAllResponses(ticketId) {
+    return await tickets.getTicketNotesById(ticketId);
+}
 
 function isClosed(status) {
     return status.includes('>Closed');
 }
 
-module.exports.isClosed = isClosed;
 module.exports.getTicketNotesById = getTicketNotesById;
 module.exports.getTicketById = getTicketById;
+module.exports.getTickets = getTickets;
+module.exports.getAllResponses = getAllResponses;
+module.exports.isClosed = isClosed;
