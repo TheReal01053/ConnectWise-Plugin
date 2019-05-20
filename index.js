@@ -19,23 +19,15 @@ const ticketAPI = new ConnectWiseRest(options).ServiceDeskAPI.Tickets;
 
 var tickets = [];
 
-async function queryAPI() {
-    const query = await ticketAPI.getTicketsBySize(1000).then((result) => {
-        tickets.push(result);
-    })
-
-    return query;
+function queryAPI() {
+    return ticketAPI.getTicketsBySize(1000).catch((err) => console.log(err));
 }
 
-queryAPI();
-
 async function readData() {
-    await queryAPI();
-    
+    const tickets = await queryAPI();
+
     tickets.forEach((ticket) => {
-        for (var i = 0; i <= 564; i++) {
-            console.log(ticket[i].id)
-        }
+        console.log(ticket.summary);
     })
 }
 
