@@ -22,11 +22,11 @@ async function onMessage(ticketId, department, response) {
         const message = {
             text: '',
             channel: channel,
+
             attachments: [
                 {
+                    title: `You have received a new response on ticket #${ ticketId }`,
                     text: response,
-                    author_name: `You have received a new resonse on ticket #${ ticketId }`,
-                    author_icon: AUTHOR_ICON,
                     fallback: `An error has occured please notify: ${ AUTHOR_NAME }`,
                     color: 'good',
                 }
@@ -55,11 +55,12 @@ async function onError(response) {
             channel: CHANNEL_ID[0],
             attachments: [
                 {
+                    title: 'Error!',
                     text: response,
-                    author_name: 'Error!',
+                    author_name: `Author: Micheal Thompson`,
                     author_icon: AUTHOR_ICON,
-                    fallback: `An error has occured please notify: ${ AUTHOR_NAME }`,
-                    color: 'good',
+                    fallback: `An error has occured please notify the author!`,
+                    color: 'danger',
                 }
             ]
         };

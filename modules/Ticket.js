@@ -11,16 +11,14 @@ const options = {
     companyUrl: 'api-aus.myconnectwise.net',
     entryPoint: 'v2019_3',
     publicKey: 'pag8CM6jgJ9L0UEF',
-    privateKey: '8zZknlzzosoC7Z71'
+    privateKey: '8zZknlzzosoC7Z71',
 };
 
 const tickets = new ConnectWiseRest(options).ServiceDeskAPI.Tickets;
 
 async function getTicketNotesById(ticketId) {
     
-    const type = await tickets.getTicketById(ticketId).catch((err) => {
-        cnwbot.onError(`Ouch! An Error has occurred please notify developer! \n ${err}`);
-    })
+    const type = await tickets.getTicketById(ticketId).catch((err) => cnwbot.onError(`Ouch! An Error has occurred please notify author! \n ${ err }`))
 
     const department = type.department.identifier;
     tickets.getTicketNotesById(ticketId).then((result) => {
@@ -32,7 +30,7 @@ async function getTicketNotesById(ticketId) {
             clientResponse
         )
     }).catch((err) => {
-        cnwbot.onError(`Ouch! An Error has occurred please notify developer! \n ${err}`)
+        cnwbot.onError(`Ouch! An Error has occurred please notify author! \n ${ err }`)
     })
 }
 
@@ -40,7 +38,7 @@ async function getTicketById(ticketId) {
     tickets.getTicketById(ticketId).then((result) => {
         console.log(result);
     }).catch((err) => {
-        cnwbot.onError(`Ouch! An Error has occurred please notify developer! \n ${err}`)
+        cnwbot.onError(`Ouch! An Error has occurred please notify author! \n ${ err }`)
     })
 }
 

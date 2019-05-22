@@ -5,41 +5,63 @@
 
 const cnw = require('./modules/Ticket');
 const cnwbot = require('./modules/slack/PostMessage');
+const bird = require('bluebird')
 
-cnw.getTicketNotesById(1097);
+const tickets = [];
 
-
-
-var resp = [];
-
-//setInterval(async () => {
-async function read() {
+async function getData() {
     try {
-        const tickets = await cnw.getTickets().catch((err) => console.log(err));
+        const query = await cnw.getTickets();
 
-            tickets.forEach(async (ticket) => {
-                if (!cnw.isClosed(ticket.status.name)) {
-                    const query = await cnw.getAllResponses(ticket.id).catch((err) => console.log(err));
-                    const ticketId = query[0].ticketId;
-                    const responses = query[0].text;
-                    
-                    resp.push({
-                        id: ticketId,
-                        response: responses
-                    })
-                }
+        await bird.map(query, async (result) => {
+            const ticket = await result;
+            if (!cnw.isClosed(ticket.status.name)) {
+                await cnw.getAllResponses(ticket.id).then((response) => {
+                    count++;
+                    const index = response.length - 1; //last client response in index
+                    const ticketId = response[index].ticketId; //ticket id
+                    const message = response[index].text; //clients response
+    
+                    console.log(tickets.includes(ticketId));
+                        tickets.push({
+                            id: ticketId,
+                            response: message
+                        })
+                });
+            }
+        }, { concurrency: 10 });
+    } catch (error) {
+    }
+    console.log(tickets.length);
+}
+
+getData();
+
+async function postToSlack() {
+    try {
+        await getData();
+
+        await bird.map(tickets, async (ticket) => {
+            await cnw.getAllResponses(ticket.id).then((result) => {
+                //console.log(tickets.length);
+                const index = result.length - 1;
+                const response = result[index].text;
+
+                if (ticket.response === response)
+                    return;
+
+                    console.log('A new response has been found on ticket #' + ticket.id + ' posting to slack!');
+                    ticket.response = response;
+                    cnw.getTicketNotesById(ticket.id);
             })
-        } catch (e) {
+        }, { concurrency: 1 });
+
+    } catch (err) {
+        cnwbot.onError(`Ouch! An Error has occurred please notify the author! \n ${ err }`)
     }
 }
 
-read();
 
-async function hasUpdated() {
-    await read();
-    resp.forEach((result) => {
-        if (result[index].text != responses) {
-            console.log('send to slack!');
-        }
-    })
-}
+setInterval(() => {
+    postToSlack();
+}, 30000)

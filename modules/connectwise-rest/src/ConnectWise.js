@@ -65,7 +65,6 @@ function ConnectWise(options) {
       retries: 4,
       minTimeout: 50,
       maxTimeout: options.timeout,
-      randomize: true,
     }, options.retryOptions);
   }
 
