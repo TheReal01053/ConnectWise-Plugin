@@ -5,6 +5,7 @@
 
 const ConnectWiseRest = require('./connectwise-rest');
 const cnwbot = require('./slack/PostMessage');
+const bird = require('bluebird')
 
 const options = {
     companyId: 'claratti',
@@ -54,6 +55,36 @@ function isClosed(status) {
     return status.includes('>Closed');
 }
 
+
+const ticks = [
+    1012,
+    1140,
+];
+
+async function getData() {
+    var ticket = await getTickets();
+
+    Promise.all([getTickets()]).then(async result => {
+        await bird.map(getAllResponses(result.id), result => {
+            console.log(result);
+        }).catch((err) => console.log(err));
+    })
+}
+
+async function postToSlack() {
+    try {
+    await getData();
+        console.log(messages.length);
+        messages.forEach((ticket) => {
+           console.log(ticket.ticketId);
+       })
+    } catch (err) {
+        cnwbot.onError(`Ouch! An Error has occurred please notify the author! \n ${ err }`)
+    }
+}
+
+module.exports.getData = getData;
+module.exports.postToSlack = postToSlack;
 module.exports.getTicketNotesById = getTicketNotesById;
 module.exports.getTicketById = getTicketById;
 module.exports.getTickets = getTickets;
