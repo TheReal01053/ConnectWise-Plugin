@@ -55,20 +55,21 @@ function isClosed(status) {
     return status.includes('>Closed');
 }
 
-
-const ticks = [
-    1012,
-    1140,
-];
+var ticketList = [];
 
 async function getData() {
-    var ticket = await getTickets();
+    const query = await getTickets();
 
-    Promise.all([getTickets()]).then(async result => {
-        await bird.map(getAllResponses(result.id), result => {
-            console.log(result);
-        }).catch((err) => console.log(err));
-    })
+    //for (i = 0; i < query.length; i++ ){
+    for (ticket in query) {
+        await bird.map(getAllResponses(ticket.id), result => {
+        }, { concurrency: 10 })/*.then(result => {
+                var index = result.length - 1;
+                console.log(result[0].ticketId)
+
+
+        }, {concurrency: 10}).catch((err) => console.log(err))*/
+    }
 }
 
 async function postToSlack() {
