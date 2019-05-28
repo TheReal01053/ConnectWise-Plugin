@@ -57,18 +57,12 @@ function isClosed(status) {
 
 var ticketList = [];
 
-async function getData() {
-    const query = await getTickets();
-
-    //for (i = 0; i < query.length; i++ ){
-    for (ticket in query) {
-        await bird.map(getAllResponses(ticket.id), result => {
-        }, { concurrency: 10 })/*.then(result => {
-                var index = result.length - 1;
-                console.log(result[0].ticketId)
-
-
-        }, {concurrency: 10}).catch((err) => console.log(err))*/
+async function getData(ticketId) {
+    const response = await bird.map(getAllResponses(ticketId), result => { return result; }, {concurrency:5}).catch((err) => console.log(err));
+    if (!ticketList.includes(response)) {
+        ticketList.push(response);
+    } else {
+        console.log('contains record already!')
     }
 }
 
@@ -78,12 +72,13 @@ async function postToSlack() {
         console.log(messages.length);
         messages.forEach((ticket) => {
            console.log(ticket.ticketId);
-       })
+        })
     } catch (err) {
         cnwbot.onError(`Ouch! An Error has occurred please notify the author! \n ${ err }`)
     }
 }
 
+module.exports.ticketList = ticketList;
 module.exports.getData = getData;
 module.exports.postToSlack = postToSlack;
 module.exports.getTicketNotesById = getTicketNotesById;
