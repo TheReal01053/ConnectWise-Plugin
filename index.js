@@ -30,9 +30,7 @@ async function get() {
 get();
 
 setInterval(() => {
-    cnw.ticketList.forEach((ticket) => {
-
-    })
+    
 }, 15000)
 
 //cnw.postToSlack();
