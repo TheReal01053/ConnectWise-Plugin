@@ -47,10 +47,15 @@ function getTickets() {
     return tickets.getTicketsBySize(1000).catch((err) => console.log(err));
 }
 
+/**
+ * Gets all client responses on parsed ticket
+ * @param {*} ticketId 
+ */
 async function getAllResponses(ticketId) {
     return await tickets.getTicketNotesById(ticketId);
 }
 
+//check if the status is equal to Closed TRUE | FALSE
 function isClosed(status) {
     return status.includes('>Closed');
 }
@@ -88,6 +93,7 @@ async function getData(ticketId) {
 }
 
 async function postToSlack() {
+    console.log('Script still running.')
     ticketList.forEach(async (ticket) => {
         var message = await bird.map(getAllResponses(ticket.id), result => { return result }, { concurrency: 10 }).catch((err) => console.log(err));
 
@@ -97,7 +103,7 @@ async function postToSlack() {
         } else {
             getTicketNotesById(ticket.id);
             ticket.message = message[index].text;
-            //console.log("message doesn't exist")
+            console.log('New message found sending to Slack!')
         }
     })
 }

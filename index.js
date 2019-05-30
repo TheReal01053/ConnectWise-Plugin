@@ -5,15 +5,11 @@
 
 const cnw = require('./modules/Ticket');
 const cnwbot = require('./modules/slack/PostMessage');
-const bird = require('bluebird')
 
-/*async function getQuery() {
-    return await bird.map(cnw.getTickets(), result => { return result; }, {concurrency:5}).filter(result => !cnw.isClosed(result.status.name)).catch((err) => console.log(err));
-}*/
-
+const SCAN_INTERVAL = 300000; // 5 minutes
 
 setInterval(async () => {
     const ticket = await cnw.getQuery();
     ticket.forEach(async (tickets) => cnw.getData(tickets.id))
     cnw.postToSlack();
-}, 5000)
+}, SCAN_INTERVAL)
