@@ -7,30 +7,13 @@ const cnw = require('./modules/Ticket');
 const cnwbot = require('./modules/slack/PostMessage');
 const bird = require('bluebird')
 
-/*async function get() {
-    const data = await cnw.getData();
-
-    console.log(data);
-}
-
-get();*/
-
-async function getQuery() {
+/*async function getQuery() {
     return await bird.map(cnw.getTickets(), result => { return result; }, {concurrency:5}).filter(result => !cnw.isClosed(result.status.name)).catch((err) => console.log(err));
-}
+}*/
 
-async function get() {
-    //await getQuery();
-    const ticket = await getQuery();
-    ticket.forEach((ticket) => {
-        cnw.getData(ticket.id);
-    })
-}
 
-get();
-
-setInterval(() => {
-    
-}, 15000)
-
-//cnw.postToSlack();
+setInterval(async () => {
+    const ticket = await cnw.getQuery();
+    ticket.forEach(async (tickets) => cnw.getData(tickets.id))
+    cnw.postToSlack();
+}, 5000)

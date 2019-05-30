@@ -55,33 +55,54 @@ function isClosed(status) {
     return status.includes('>Closed');
 }
 
-var ticketList = [];
-
-async function getData(ticketId) {
-
-    await bird.map(getAllResponses(ticketId), result => { return result; }).then(response => {
-        if (!ticketList.includes(response.ticketId)) {
-            ticketList.push({
-                id: response[0].ticketId,
-                message: response[0].text
-            });
-        } else {
-            console.log('contains record already!')
-        }
-
-        console.log(response[0].ticketId);
-    }).catch((err) => console.log(""))
+//Get all non-closed tickets
+async function getQuery() {
+    return await bird.map(getTickets(), result => { return result; }, {concurrency:5}).filter(result => !isClosed(result.status.name)).catch((err) => console.log(err));
 }
 
-async function postToSlack() {
+var ticketList = [];
+
+/**
+ * Retrieves all responses against tickets and caches them into an array
+ * which i can use later to compare whether a new response has been made against the ticket6
+ * @param {tickedId to get responses from corresponding ticket} ticketId 
+ */
+
+async function getData(ticketId) {
     try {
-    await getData();
-        
-    } catch (err) {
-        cnwbot.onError(`Ouch! An Error has occurred please notify the author! \n ${ err }`)
+        await bird.map(getAllResponses(ticketId), result => { return result; }).then(response => {
+            var index = response.length - 1;
+            var isTrue = ticketList.some(x => x.id == ticketId);
+    
+            if (!isTrue) {
+                ticketList.push({
+                    id: response[index].ticketId,
+                    message: response[index].text
+                });
+            } else {
+            }
+        })
+    } catch (e) {
+
     }
 }
 
+async function postToSlack() {
+    ticketList.forEach(async (ticket) => {
+        var message = await bird.map(getAllResponses(ticket.id), result => { return result }, { concurrency: 10 }).catch((err) => console.log(err));
+
+        var index = message.length - 1;
+        if (ticket.message.includes(message[index].text)) {
+            //console.log("message exists")
+        } else {
+            getTicketNotesById(ticket.id);
+            ticket.message = message[index].text;
+            //console.log("message doesn't exist")
+        }
+    })
+}
+
+module.exports.getQuery = getQuery;
 module.exports.ticketList = ticketList;
 module.exports.getData = getData;
 module.exports.postToSlack = postToSlack;
