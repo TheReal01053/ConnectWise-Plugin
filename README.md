@@ -10,5 +10,6 @@
  - ConnectWise ticket responses pushed to slack channel (Networks, Workspaces) depends on department ticket is in.
 
 #### Dependencies 
+ * **NodeJS**
  * **Request**
  * **Request-Promise**
