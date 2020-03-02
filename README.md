@@ -11,5 +11,3 @@
 
 #### Dependencies 
  * **NodeJS**
- * **Request**
- * **Request-Promise**
