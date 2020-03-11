@@ -6,8 +6,11 @@
   Author: Micheal Thompson
 </p>
 
-#### Features
- - ConnectWise ticket responses pushed to slack channel (Networks, Workspaces) depends on department ticket is in.
+#### What this does?
+It is used internally for updating technicians via their respective department Slack channel when a client responds to a ticket sending a formatted message of their response and the ticket number.
 
-#### Dependencies 
+#### Future Plans?
+ - Make it so technicians can respond directly from Slack back to that ticket for a Slack command.
+
+#### Technologies used
  * **NodeJS**
