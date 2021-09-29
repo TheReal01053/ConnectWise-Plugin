@@ -12,7 +12,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.4",
     "connectwise-rest": "^0.23.1",
-    "i": "^0.3.6",
+    "i": "^0.3.7",
     "npm": "^6.9.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
