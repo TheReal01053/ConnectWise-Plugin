@@ -8,11 +8,7 @@ const cnwbot = require('./slack/PostMessage');
 const bird = require('bluebird')
 
 const options = {
-    companyId: 'claratti',
-    companyUrl: 'api-aus.myconnectwise.net',
-    entryPoint: 'v2019_3',
-    publicKey: 'pag8CM6jgJ9L0UEF',
-    privateKey: '8zZknlzzosoC7Z71',
+
 };
 
 const tickets = new ConnectWiseRest(options).ServiceDeskAPI.Tickets;
